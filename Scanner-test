@@ -1,0 +1,91 @@
+#include<stdio.h>
+#include<string.h>
+#include<ctype.h>
+#include<windows.h>
+
+void scan()
+{
+	char input[100],oper[20];
+	char variabel[20][20];
+	int constant[28],ascii[100] = {0};
+	int cnt, i , num=0;
+	int j=-1,k=-1,l=-1,n=0;
+	int print[10]={0}, m=0;
+
+	printf("Input : ");
+	scanf("%[^\n]%*c", input);
+
+	cnt = strlen(input);
+	for(i=0;i<cnt;++i)
+	{
+		ascii[i] = (int)input[i];
+	}
+
+	for(i=0;i<cnt;++i)
+	{
+		if(isdigit(input[i]))
+		{
+			while(isdigit(input[i]))
+			{
+				num = 10 * num + ascii[i] -'0';
+				i++;
+			}
+			j++;
+			constant[j] = num;
+			num = 0;
+		}
+
+		if(isalpha(input[i]))
+		{
+			while(isalpha(input[i]) || isdigit(input[i]) || input[i] == '_')
+			{
+				k++;
+				variabel[m][k] = input[i];
+				i++;
+			}
+			m++;
+			print[n] = k;
+			n++;
+			k = -1;
+		}
+
+		if(input[i]=='+'||input[i]=='-'||input[i]=='/'|| input[i]=='*'|| input[i]=='='|| input[i]=='^')
+		{
+			l++;
+			oper[l] = input[i];
+		}
+	}
+
+	printf("\n\nLiterals : \n\n");
+	for(i=0;i<=j;i++)
+	{
+		printf("lit%d \t%d \n", i+1, constant[i]);
+	}
+
+	printf("\nOperators : \n\n");
+	for(i=0;i<=l;i++)
+	{
+		printf("op%d \t%c \n", i+1, oper[i]);
+	}
+
+	printf("\nvariables : \n\n");
+	for(i=0;i<m;i++)
+	{
+		printf("id%d \t", i+1);
+		for(j=0;j<=print[i];j++)
+		{
+			printf("%c\n", variabel[i][j]);
+		}
+	}
+}
+
+int main()
+{
+	while(1)
+	{
+		scan();
+		getchar();
+		system("cls");
+	}
+	return 0;
+}
